@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailClient", "GmailClient\GmailClient.csproj", "{6AA3EFBB-CDE6-4B5A-9C1A-59EFCDFE7398}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailClient.Tests", "GmailClient.Tests\GmailClient.Tests.csproj", "{C9563B5C-8466-4B54-A05E-F185802FD853}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6AA3EFBB-CDE6-4B5A-9C1A-59EFCDFE7398}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AA3EFBB-CDE6-4B5A-9C1A-59EFCDFE7398}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AA3EFBB-CDE6-4B5A-9C1A-59EFCDFE7398}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AA3EFBB-CDE6-4B5A-9C1A-59EFCDFE7398}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9563B5C-8466-4B54-A05E-F185802FD853}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9563B5C-8466-4B54-A05E-F185802FD853}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9563B5C-8466-4B54-A05E-F185802FD853}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9563B5C-8466-4B54-A05E-F185802FD853}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
