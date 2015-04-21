@@ -7,6 +7,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailClient", "GmailClient\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailClient.Tests", "GmailClient.Tests\GmailClient.Tests.csproj", "{C9563B5C-8466-4B54-A05E-F185802FD853}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailClient.Data", "GmailClient.Data\GmailClient.Data.csproj", "{46FBA3B7-8B7F-498B-BF17-81DD8298A3DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailClient.Model", "GmailClient.Model\GmailClient.Model.csproj", "{7A0DF6BD-F04A-4FB0-9AC9-A1F678CF87BB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{03441EA9-5D41-451E-A420-310F576A56EE}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +32,14 @@ Global
 		{C9563B5C-8466-4B54-A05E-F185802FD853}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9563B5C-8466-4B54-A05E-F185802FD853}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9563B5C-8466-4B54-A05E-F185802FD853}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46FBA3B7-8B7F-498B-BF17-81DD8298A3DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46FBA3B7-8B7F-498B-BF17-81DD8298A3DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46FBA3B7-8B7F-498B-BF17-81DD8298A3DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46FBA3B7-8B7F-498B-BF17-81DD8298A3DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A0DF6BD-F04A-4FB0-9AC9-A1F678CF87BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A0DF6BD-F04A-4FB0-9AC9-A1F678CF87BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A0DF6BD-F04A-4FB0-9AC9-A1F678CF87BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A0DF6BD-F04A-4FB0-9AC9-A1F678CF87BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
