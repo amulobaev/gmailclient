@@ -13,5 +13,15 @@ namespace GmailClient.Controllers
         {
             return View();
         }
+
+        public ActionResult Mail(string folder = "Inbox")
+        {
+            return View();
+        }
+
+        public ActionResult Settings()
+        {
+            return View();
+        }
     }
 }

@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{03441E
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailClient.Transport", "GmailClient.Transport\GmailClient.Transport.csproj", "{1D91EA85-A40F-4708-93DE-F0014B514EBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{7A0DF6BD-F04A-4FB0-9AC9-A1F678CF87BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A0DF6BD-F04A-4FB0-9AC9-A1F678CF87BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A0DF6BD-F04A-4FB0-9AC9-A1F678CF87BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D91EA85-A40F-4708-93DE-F0014B514EBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D91EA85-A40F-4708-93DE-F0014B514EBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D91EA85-A40F-4708-93DE-F0014B514EBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D91EA85-A40F-4708-93DE-F0014B514EBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Mail";
+}
+
+<h2>Mail</h2>
+
+<div class="row">
+    <div class="col-md-3" role="complementary">
+        @*Folders*@
+        <div id="scanfolders">Scanning folders...</div>
+        <nav>
+            <ul class="nav" id="folders">
+                @*<li role="presentation" class="active"><a href="#">1</a></li>*@
+            </ul>
+        </nav>
+    </div>
+
+    <div class="col-md-9" role="main">
+        @*Messages*@
+        <table id="messages" class="table table-striped">
+            <thead>
+            <th>Sender</th>
+            <th>Subject</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        //Fetch folders
+        $(document).ready(function () {
+            $.getJSON("/api/folders", LoadFolders);
+        });
+
+        function LoadFolders(data) {
+            $("#scanfolders").html("");
+            $("#ulnav").html("");
+            $.each(data, function (key, val) {
+                $("#folders").append("<li role=\"presentation\"><a href='#' onclick='OpenFolder(\"" + val.Name + "\")'><i class=\"fa fa-folder\"></i> " + val.Name + "</a></li>");
+            });
+        }
+
+        function OpenFolder(folder) {
+            $.getJSON("/api/messages", "folder=" + folder, LoadMessages);
+        }
+
+        function LoadMessages(data) {
+            $("#messages").find("tr:gt(0)").remove();
+            $.each(data, function (key, val) {
+                var tableRow = '<tr>' +
+                                '<td>' + val.FromDisplayName + '</td>' +
+                                '<td>' + val.Subject + '</td>' +
+                                '</tr>';
+                $('#messages').append(tableRow);
+            });
+        }
+    </script>
+}
