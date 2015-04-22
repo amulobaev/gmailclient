@@ -17,7 +17,7 @@ namespace GmailClient.Transport
         public void SendMail(string to, string subject, string message)
         {
             //Update your SMTP server credentials
-            using (var client = new SmtpClient("smtp.gmail.com", 465)
+            using (var client = new SmtpClient("smtp.gmail.com", 587)
             {
                 EnableSsl = true,
                 Credentials = new NetworkCredential("mulobaev.a@gmail.com", "691ee1da6c"),
