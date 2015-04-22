@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using GmailClient.Model;
@@ -22,34 +19,16 @@ namespace GmailClient.Controllers
         {
         }
 
-        public AccountController(CustomUserManager userManager, CustomSignInManager signInManager)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-        }
-
         public CustomSignInManager SignInManager
         {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<CustomSignInManager>();
-            }
-            private set
-            {
-                _signInManager = value;
-            }
+            get { return _signInManager ?? HttpContext.GetOwinContext().Get<CustomSignInManager>(); }
+            private set { _signInManager = value; }
         }
 
         public CustomUserManager UserManager
         {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<CustomUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<CustomUserManager>(); }
+            private set { _userManager = value; }
         }
 
         //
@@ -73,20 +52,15 @@ namespace GmailClient.Controllers
                 return View(model);
             }
 
-            // Сбои при входе не приводят к блокированию учетной записи
-            // Чтобы ошибки при вводе пароля инициировали блокирование учетной записи, замените на shouldLockout: true
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.User, model.Password, model.RememberMe, false);
             switch (result)
             {
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
-                //case SignInStatus.LockedOut:
-                //    return View("Lockout");
-                //case SignInStatus.RequiresVerification:
-                //    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                //case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Неудачная попытка входа.");
+                    ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
         }
@@ -114,18 +88,18 @@ namespace GmailClient.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    // Дополнительные сведения о том, как включить подтверждение учетной записи и сброс пароля, см. по адресу: http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Отправка сообщения электронной почты с этой ссылкой
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Подтверждение учетной записи", "Подтвердите вашу учетную запись, щелкнув <a href=\"" + callbackUrl + "\">здесь</a>");
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
 
-            // Появление этого сообщения означает наличие ошибки; повторное отображение формы
+            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
@@ -159,12 +133,11 @@ namespace GmailClient.Controllers
             base.Dispose(disposing);
         }
 
+        #region Helpers
+
         private IAuthenticationManager AuthenticationManager
         {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
+            get { return HttpContext.GetOwinContext().Authentication; }
         }
 
         private void AddErrors(IdentityResult result)
@@ -183,5 +156,8 @@ namespace GmailClient.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
+        #endregion Helpers
+
     }
 }

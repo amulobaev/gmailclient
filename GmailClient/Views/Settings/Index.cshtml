@@ -6,7 +6,7 @@
 
 <h2>Account settings</h2>
 
-@using (Html.BeginForm("Settings", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Index", "Settings", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">

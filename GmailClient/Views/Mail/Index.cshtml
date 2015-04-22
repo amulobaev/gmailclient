@@ -1,8 +1,14 @@
-﻿@{
+﻿@model GmailClient.Models.MailModel
+
+@{
     ViewBag.Title = "Mail";
 }
 
-<h2>Mail</h2>
+<div class="row">
+    <p>
+        @Html.ActionLink("Compose mail", "Compose", "Mail", new { @class = "btn btn-primary", role = "button" })
+    </p>
+</div>
 
 <div class="row">
     <div class="col-md-3" role="complementary">
