@@ -14,11 +14,13 @@ namespace GmailClient.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult Mail(string folder = "Inbox")
         {
             return View();
         }
 
+        [Authorize]
         public ActionResult Settings()
         {
             return View();

@@ -5,6 +5,7 @@ using System.Data.Linq;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GmailClient.Data.Entities;
 
 namespace GmailClient.Data
 {
@@ -25,7 +26,13 @@ namespace GmailClient.Data
 
         public Table<AccountEntity> Accounts
         {
-            get { return this.GetTable<AccountEntity>(); }
+            get { return GetTable<AccountEntity>(); }
         }
+
+        public Table<UserEntity> Users
+        {
+            get { return GetTable<UserEntity>(); }
+        }
+
     }
 }
