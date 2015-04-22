@@ -1,4 +1,5 @@
-﻿using System.Data.Linq.Mapping;
+﻿using System;
+using System.Data.Linq.Mapping;
 
 namespace GmailClient.Data.Entities
 {
@@ -6,7 +7,7 @@ namespace GmailClient.Data.Entities
     class AccountEntity
     {
         [Column(IsPrimaryKey = true)]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Column]
         public string Name { get; set; }

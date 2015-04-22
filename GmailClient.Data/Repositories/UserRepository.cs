@@ -8,10 +8,14 @@ using GmailClient.Model;
 
 namespace GmailClient.Data
 {
-    public class UserRepository
+    public class UserRepository : IRepository<ApplicationUser>
     {
+        /// <summary>
+        /// Static constructor
+        /// </summary>
         static UserRepository()
         {
+            // Create mappings
             Mapper.CreateMap<ApplicationUser, UserEntity>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.Parse(src.Id)))
                 .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.UserName));
@@ -28,7 +32,7 @@ namespace GmailClient.Data
             }
         }
 
-        public ApplicationUser Get(Guid id)
+        public ApplicationUser GetById(Guid id)
         {
             using (MailContext context = new MailContext())
             {
@@ -47,5 +51,14 @@ namespace GmailClient.Data
             }
         }
 
+        public void Update(ApplicationUser model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(ApplicationUser model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

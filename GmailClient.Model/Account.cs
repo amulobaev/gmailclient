@@ -12,7 +12,7 @@ namespace GmailClient.Model
     /// </summary>
     public class Account
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         
         /// <summary>
         /// Name

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace GmailClient.Controllers
 {
@@ -14,16 +10,5 @@ namespace GmailClient.Controllers
             return View();
         }
 
-        [Authorize]
-        public ActionResult Mail(string folder = "Inbox")
-        {
-            return View();
-        }
-
-        [Authorize]
-        public ActionResult Settings()
-        {
-            return View();
-        }
     }
 }

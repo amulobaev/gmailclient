@@ -15,7 +15,7 @@ namespace GmailClient.Controllers
         public IEnumerable<Folder> Get()
         {
             AccountRepository repository = new AccountRepository();
-            Account account = repository.Get(1);
+            Account account = repository.GetAll().FirstOrDefault();
             MailClient client = new MailClient(account.Email, account.Password);
             var folders = client.GetFolders();
             return folders;

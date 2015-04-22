@@ -9,7 +9,8 @@ using Microsoft.AspNet.Identity;
 
 namespace GmailClient.Models
 {
-    public class CustomUserStore : IUserStore<ApplicationUser>, IUserPasswordStore<ApplicationUser>, IUserLockoutStore<ApplicationUser, string>, IUserTwoFactorStore<ApplicationUser, string>
+    public class CustomUserStore : IUserStore<ApplicationUser>, IUserPasswordStore<ApplicationUser>,
+        IUserLockoutStore<ApplicationUser, string>, IUserTwoFactorStore<ApplicationUser, string>
     {
         private UserRepository _repository = new UserRepository();
 
@@ -44,7 +45,7 @@ namespace GmailClient.Models
         {
             Task<ApplicationUser> task = Task<ApplicationUser>.Factory.StartNew(() =>
             {
-                return _repository.Get(Guid.Parse(userId));
+                return _repository.GetById(Guid.Parse(userId));
             });
             return task;
         }
@@ -67,9 +68,9 @@ namespace GmailClient.Models
             return task;
         }
 
-        
-        
-        
+
+
+
         public Task<string> GetPasswordHashAsync(ApplicationUser user)
         {
             Task<string> task = Task<string>.Factory.StartNew(() =>
@@ -85,8 +86,8 @@ namespace GmailClient.Models
         }
 
 
-        
-        
+
+
         public Task<DateTimeOffset> GetLockoutEndDateAsync(ApplicationUser user)
         {
             throw new NotImplementedException();
@@ -130,11 +131,11 @@ namespace GmailClient.Models
             throw new NotImplementedException();
         }
 
-        
-        
-        
-        
-        
+
+
+
+
+
         public Task SetTwoFactorEnabledAsync(ApplicationUser user, bool enabled)
         {
             throw new NotImplementedException();
