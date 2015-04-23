@@ -241,7 +241,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Mail\Inbox.cshtml" />
     <Content Include="Views\Settings\Index.cshtml" />
     <Content Include="Views\Mail\Index.cshtml" />
     <Content Include="Scripts\jquery-2.1.3.min.map" />

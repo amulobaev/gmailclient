@@ -18,7 +18,7 @@ namespace GmailClient
             Bind<IRepository<Account>>().To<AccountRepository>();
             Bind<IRepository<ApplicationUser>>().To<UserRepository>();
             Bind<IAccountInfo>().To<AccountInfo>();
-            Bind<IMailClient>().To<MailClient>();
+            Bind<IMailClient>().To<Transport.GmailClient>();
             Bind<IMailSender>().To<GmailSender>();
         }
     }

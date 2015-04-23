@@ -57,7 +57,7 @@
     <Compile Include="IMailSender.cs" />
     <Compile Include="GmailSender.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="MailClient.cs" />
+    <Compile Include="GmailClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

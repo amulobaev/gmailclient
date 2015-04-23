@@ -6,6 +6,9 @@ using GmailClient.Transport;
 
 namespace GmailClient.Controllers
 {
+    /// <summary>
+    /// Mail MVC controller
+    /// </summary>
     [Authorize]
     public class MailController : Controller
     {

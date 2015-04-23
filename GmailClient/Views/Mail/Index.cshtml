@@ -86,6 +86,16 @@
 
         function deleteMail(id) {
             $("tr[id*=" + id + "]").remove();
+            $.ajax({
+                url: '/api/messages/' + id,
+                type: 'DELETE',
+                success: function(data) {
+                    
+                },
+                error: function(data) {
+                    
+                }
+            });
         }
     </script>
 }

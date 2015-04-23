@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using GmailClient.Model;
 using ImapX;
@@ -12,7 +13,7 @@ namespace GmailClient.Transport
     /// <summary>
     /// My custom IMAP client implementation for Gmail
     /// </summary>
-    public class MailClient : IMailClient
+    public class GmailClient : IMailClient
     {
         private const string Host = "imap.gmail.com";
 
@@ -21,7 +22,7 @@ namespace GmailClient.Transport
         /// <summary>
         /// Static constructor
         /// </summary>
-        static MailClient()
+        static GmailClient()
         {
             // Set mappings
             Mapper.CreateMap<ImapX.Folder, Folder>();
@@ -35,7 +36,7 @@ namespace GmailClient.Transport
         /// Default constructor
         /// </summary>
         /// <param name="accountInfo">Mail account info (email, password)</param>
-        public MailClient(IAccountInfo accountInfo)
+        public GmailClient(IAccountInfo accountInfo)
         {
             if (accountInfo == null)
                 throw new ArgumentNullException("accountInfo");
@@ -48,15 +49,19 @@ namespace GmailClient.Transport
         /// <returns></returns>
         public IEnumerable<Folder> GetFolders()
         {
+            // Create IMAP client
             using (ImapClient client = new ImapClient())
             {
-                //client.Behavior.FolderTreeBrowseMode = FolderTreeBrowseMode.Full;
                 client.Behavior.ExamineFolders = false;
+                client.Behavior.MessageFetchMode = MessageFetchMode.None;
 
+                // Connect
                 if (client.Connect(Host, true))
                 {
+                    // Login
                     if (client.Login(_accountInfo.Email, _accountInfo.Password))
                     {
+                        // Get all folders
                         List<ImapX.Folder> folders = client.AllFolders();
                         return Mapper.Map<List<ImapX.Folder>, List<Folder>>(folders);
                     }
@@ -73,18 +78,23 @@ namespace GmailClient.Transport
         /// <returns></returns>
         public IEnumerable<Message> GetMessages(string folderName)
         {
+            // // Create IMAP client
             using (ImapClient client = new ImapClient())
             {
                 client.Behavior.ExamineFolders = false;
                 client.Behavior.MessageFetchMode = MessageFetchMode.Minimal;
 
-                if (client.Connect("imap.gmail.com", true))
+                // Connect
+                if (client.Connect(Host, true))
                 {
+                    // Login
                     if (client.Login(_accountInfo.Email, _accountInfo.Password))
                     {
+                        // Find folder
                         ImapX.Folder folder = client.FindFolder(folderName);
                         if (folder != null)
                         {
+                            // Download messages
                             folder.Messages.Download(mode: MessageFetchMode.Minimal);
                             List<Message> messages =
                                 Mapper.Map<IEnumerable<ImapX.Message>, List<Message>>(folder.Messages);
@@ -97,5 +107,31 @@ namespace GmailClient.Transport
             return null;
         }
 
+        public void DeleteMessage(int id)
+        {
+            // // Create IMAP client
+            using (ImapClient client = new ImapClient())
+            {
+                client.Behavior.ExamineFolders = false;
+                //client.Behavior.MessageFetchMode = MessageFetchMode.Minimal;
+
+                // Connect
+                if (client.Connect(Host, true))
+                {
+                    // Login
+                    if (client.Login(_accountInfo.Email, _accountInfo.Password))
+                    {
+                        // Find folder
+                        ImapX.Folder folder = client.FindFolder("All Mail");
+                        if (folder != null)
+                        {
+                            var messages = folder.Search(new[] { (long)id });
+                            if (messages.Any())
+                                messages[0].Remove();
+                        }
+                    }
+                }
+            }
+        }
     }
 }

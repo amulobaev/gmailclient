@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Web.Http;
 using GmailClient.Model;
 using GmailClient.Transport;
 
 namespace GmailClient.Controllers
 {
+    /// <summary>
+    /// API controller for manipulating messages
+    /// </summary>
+    [Authorize]
     public class MessagesController : ApiController
     {
         private readonly IMailClient _mailClient;
@@ -21,10 +26,21 @@ namespace GmailClient.Controllers
             _mailClient = mailClient;
         }
 
+        /// <summary>
+        /// Get all messages in folder
+        /// </summary>
+        /// <param name="folder"></param>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<Message> Get([FromUri]string folder)
         {
             return _mailClient.GetMessages(folder);
         }
+
+        public void Delete(int id)
+        {
+            _mailClient.DeleteMessage(id);
+        }
+
     }
 }

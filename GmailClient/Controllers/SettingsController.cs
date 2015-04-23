@@ -7,16 +7,27 @@ using GmailClient.Models;
 
 namespace GmailClient.Controllers
 {
+    /// <summary>
+    /// Settings MVC contoller (mail account settings)
+    /// </summary>
     [Authorize]
     public class SettingsController : Controller
     {
         private readonly IRepository<Account> _accountRepository;
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="accountRepository">Accounts repository implementation</param>
         public SettingsController(IRepository<Account> accountRepository)
         {
             _accountRepository = accountRepository;
         }
 
+        /// <summary>
+        /// Index action
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Index()
         {
@@ -33,6 +44,11 @@ namespace GmailClient.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Save settings action
+        /// </summary>
+        /// <param name="model">Account settings</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Index(AccountSettingsModel model)
         {

@@ -20,5 +20,11 @@ namespace GmailClient.Transport
         /// <param name="folderName">Folder name</param>
         /// <returns></returns>
         IEnumerable<Message> GetMessages(string folderName);
+
+        /// <summary>
+        /// Delete message
+        /// </summary>
+        /// <param name="id">Message identifier</param>
+        void DeleteMessage(int id);
     }
 }
