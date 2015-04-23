@@ -225,9 +225,9 @@
     </Compile>
     <Compile Include="Models\AccountSettingsModel.cs" />
     <Compile Include="Models\ComposeMailModel.cs" />
-    <Compile Include="Models\CustomSignInManager.cs" />
-    <Compile Include="Models\CustomUserManager.cs" />
-    <Compile Include="Models\CustomUserStore.cs" />
+    <Compile Include="Identity\CustomSignInManager.cs" />
+    <Compile Include="Identity\CustomUserManager.cs" />
+    <Compile Include="Identity\CustomUserStore.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MailModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />

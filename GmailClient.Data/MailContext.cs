@@ -26,7 +26,7 @@ namespace GmailClient.Data
         }
 
         /// <summary>
-        /// Users table (local users_
+        /// Users table (local users)
         /// </summary>
         public Table<UserEntity> Users
         {

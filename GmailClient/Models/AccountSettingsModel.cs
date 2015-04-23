@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace GmailClient.Models
 {
@@ -14,6 +10,7 @@ namespace GmailClient.Models
 
         [Required]
         [Display(Name = "Email")]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Display(Name = "New password")]

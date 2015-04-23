@@ -2,6 +2,9 @@
 
 namespace GmailClient.Data.Migrations
 {
+    /// <summary>
+    /// Initial database creation
+    /// </summary>
     [Migration(1)]
     public class InitialCreate : Migration
     {

@@ -67,14 +67,38 @@ namespace GmailClient.Data
             }
         }
 
+        /// <summary>
+        /// Update user entity in repo
+        /// </summary>
+        /// <param name="model">User model</param>
         public void Update(ApplicationUser model)
         {
-            throw new NotImplementedException();
+            using (MailContext context = new MailContext())
+            {
+                UserEntity entity = context.Users.FirstOrDefault(x => x.Id == Guid.Parse(model.Id));
+                if (entity != null)
+                {
+                    Mapper.Map(model, entity);
+                    context.SubmitChanges();
+                }
+            }
         }
 
+        /// <summary>
+        /// Delete user entity in repo
+        /// </summary>
+        /// <param name="model"></param>
         public void Delete(ApplicationUser model)
         {
-            throw new NotImplementedException();
+            using (MailContext context = new MailContext())
+            {
+                UserEntity entity = context.Users.FirstOrDefault(x => x.Id == Guid.Parse(model.Id));
+                if (entity != null)
+                {
+                    context.Users.DeleteOnSubmit(entity);
+                    context.SubmitChanges();
+                }
+            }
         }
     }
 }

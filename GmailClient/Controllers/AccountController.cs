@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using GmailClient.Identity;
 using GmailClient.Model;
 using GmailClient.Models;
 using Microsoft.AspNet.Identity;

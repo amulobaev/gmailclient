@@ -1,20 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GmailClient.Model;
 
 namespace GmailClient.Data
 {
     /// <summary>
-    /// IAccountInfo implementation
+    /// IAccountInfo implementation (get account info from database)
     /// </summary>
     public class AccountInfo : IAccountInfo
     {
+        #region Fields
+
         private readonly string _name;
         private readonly string _email;
         private readonly string _password;
+
+        #endregion Fields
 
         /// <summary>
         /// Constructor
@@ -33,16 +34,25 @@ namespace GmailClient.Data
             }
         }
 
+        /// <summary>
+        /// Name
+        /// </summary>
         public string Name
         {
             get { return _name; }
         }
 
+        /// <summary>
+        /// Email
+        /// </summary>
         public string Email
         {
             get { return _email; }
         }
 
+        /// <summary>
+        /// Password
+        /// </summary>
         public string Password
         {
             get { return _password; }

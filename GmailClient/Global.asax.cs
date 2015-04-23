@@ -1,7 +1,9 @@
-﻿using System.Web.Http;
+﻿using System.Configuration;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using GmailClient.Data;
 using Ninject;
 using Ninject.Web.Common;
 
@@ -22,6 +24,8 @@ namespace GmailClient
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            MigrationManager.Start(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
         }
     }
 }

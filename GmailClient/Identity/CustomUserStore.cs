@@ -1,22 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using GmailClient.Data;
 using GmailClient.Model;
 using Microsoft.AspNet.Identity;
 
-namespace GmailClient.Models
+namespace GmailClient.Identity
 {
+    /// <summary>
+    /// User store custom implementation for ASP.NET Identity 
+    /// </summary>
     public class CustomUserStore : IUserStore<ApplicationUser>, IUserPasswordStore<ApplicationUser>,
         IUserLockoutStore<ApplicationUser, string>, IUserTwoFactorStore<ApplicationUser, string>
     {
-        private UserRepository _repository = new UserRepository();
+        private readonly UserRepository _repository;
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public CustomUserStore()
         {
+            // Create local users repository
+            _repository = new UserRepository();
         }
+
+        #region IUserStore implementation
 
         public void Dispose()
         {
@@ -24,11 +32,7 @@ namespace GmailClient.Models
 
         public Task CreateAsync(ApplicationUser user)
         {
-            Task task = Task.Factory.StartNew(() =>
-            {
-                _repository.Create(user);
-            });
-            return task;
+            return Task.Factory.StartNew(() => { _repository.Create(user); });
         }
 
         public Task UpdateAsync(ApplicationUser user)
@@ -43,41 +47,29 @@ namespace GmailClient.Models
 
         public Task<ApplicationUser> FindByIdAsync(string userId)
         {
-            Task<ApplicationUser> task = Task<ApplicationUser>.Factory.StartNew(() =>
-            {
-                return _repository.GetById(Guid.Parse(userId));
-            });
-            return task;
+            return Task<ApplicationUser>.Factory.StartNew(() => _repository.GetById(Guid.Parse(userId)));
         }
 
         public Task<ApplicationUser> FindByNameAsync(string userName)
         {
-            Task<ApplicationUser> task = Task<ApplicationUser>.Factory.StartNew(() =>
+            return Task<ApplicationUser>.Factory.StartNew(() =>
             {
                 return _repository.GetAll().FirstOrDefault(x => string.Equals(x.UserName, userName));
             });
-            return task;
         }
 
         public Task SetPasswordHashAsync(ApplicationUser user, string passwordHash)
         {
-            Task task = Task.Factory.StartNew(() =>
-            {
-                user.Password = passwordHash;
-            });
-            return task;
+            return Task.Factory.StartNew(() => { user.Password = passwordHash; });
         }
 
+        #endregion IUserStore implementation
 
-
+        #region IUserPasswordStore implementation
 
         public Task<string> GetPasswordHashAsync(ApplicationUser user)
         {
-            Task<string> task = Task<string>.Factory.StartNew(() =>
-            {
-                return user.Password;
-            });
-            return task;
+            return Task<string>.Factory.StartNew(() => user.Password);
         }
 
         public Task<bool> HasPasswordAsync(ApplicationUser user)
@@ -85,8 +77,9 @@ namespace GmailClient.Models
             throw new NotImplementedException();
         }
 
+        #endregion IUserPasswordStore implementation
 
-
+        #region IUserLockoutStore implementation
 
         public Task<DateTimeOffset> GetLockoutEndDateAsync(ApplicationUser user)
         {
@@ -110,20 +103,12 @@ namespace GmailClient.Models
 
         public Task<int> GetAccessFailedCountAsync(ApplicationUser user)
         {
-            Task<int> task = Task<int>.Factory.StartNew(() =>
-            {
-                return 0;
-            });
-            return task;
+            return Task<int>.Factory.StartNew(() => 0);
         }
 
         public Task<bool> GetLockoutEnabledAsync(ApplicationUser user)
         {
-            Task<bool> task = Task<bool>.Factory.StartNew(() =>
-            {
-                return false;
-            });
-            return task;
+            return Task<bool>.Factory.StartNew(() => false);
         }
 
         public Task SetLockoutEnabledAsync(ApplicationUser user, bool enabled)
@@ -131,10 +116,9 @@ namespace GmailClient.Models
             throw new NotImplementedException();
         }
 
+        #endregion IUserLockoutStore implementation
 
-
-
-
+        #region IUserTwoFactorStore implementation
 
         public Task SetTwoFactorEnabledAsync(ApplicationUser user, bool enabled)
         {
@@ -143,12 +127,10 @@ namespace GmailClient.Models
 
         public Task<bool> GetTwoFactorEnabledAsync(ApplicationUser user)
         {
-            Task<bool> task = Task<bool>.Factory.StartNew(() =>
-            {
-                return false;
-            });
-            return task;
+            return Task<bool>.Factory.StartNew(() => false);
         }
+
+        #endregion IUserTwoFactorStore implementation
 
     }
 }

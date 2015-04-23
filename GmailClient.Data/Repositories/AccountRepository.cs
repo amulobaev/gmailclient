@@ -7,14 +7,25 @@ using GmailClient.Model;
 
 namespace GmailClient.Data
 {
+    /// <summary>
+    /// IRepository implementation for mail accounts
+    /// </summary>
     public class AccountRepository : IRepository<Account>
     {
+        /// <summary>
+        /// Static constructor
+        /// </summary>
         static AccountRepository()
         {
+            // Create mappings for Automapper
             Mapper.CreateMap<Account, AccountEntity>();
             Mapper.CreateMap<AccountEntity, Account>();
         }
 
+        /// <summary>
+        /// Get all accounts
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Account> GetAll()
         {
             using (MailContext context = new MailContext())
@@ -24,6 +35,11 @@ namespace GmailClient.Data
             }
         }
 
+        /// <summary>
+        /// Get account by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Account GetById(Guid id)
         {
             using (MailContext context = new MailContext())
@@ -34,6 +50,10 @@ namespace GmailClient.Data
             }
         }
 
+        /// <summary>
+        /// Create account in repo
+        /// </summary>
+        /// <param name="model">Account model</param>
         public void Create(Account model)
         {
             using (MailContext context = new MailContext())
@@ -44,6 +64,10 @@ namespace GmailClient.Data
             }
         }
 
+        /// <summary>
+        /// Update account
+        /// </summary>
+        /// <param name="model">Account model</param>
         public void Update(Account model)
         {
             using (MailContext context = new MailContext())
@@ -57,9 +81,21 @@ namespace GmailClient.Data
             }
         }
 
+        /// <summary>
+        /// Delete account
+        /// </summary>
+        /// <param name="model">Account model</param>
         public void Delete(Account model)
         {
-            throw new NotImplementedException();
+            using (MailContext context = new MailContext())
+            {
+                AccountEntity entity = context.Accounts.FirstOrDefault(x => x.Id == model.Id);
+                if (entity != null)
+                {
+                    context.Accounts.DeleteOnSubmit(entity);
+                    context.SubmitChanges();
+                }
+            }
         }
 
     }
