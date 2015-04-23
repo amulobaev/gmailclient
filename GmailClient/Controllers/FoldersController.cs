@@ -6,26 +6,32 @@ using GmailClient.Transport;
 
 namespace GmailClient.Controllers
 {
+    /// <summary>
+    /// API controller for fetching imap folders
+    /// </summary>
     public class FoldersController : ApiController
     {
-        private readonly IAccountInfo _accountInfo;
+        private readonly IMailClient _mailClient;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="accountInfo">IAccountInfo implementation</param>
-        public FoldersController(IAccountInfo accountInfo)
+        /// <param name="mailClient">Mail client implementation</param>
+        public FoldersController(IMailClient mailClient)
         {
-            if (accountInfo == null)
-                throw new ArgumentNullException("accountInfo");
-            _accountInfo = accountInfo;
+            if (mailClient == null)
+                throw new ArgumentNullException("mailClient");
+            _mailClient = mailClient;
         }
 
+        /// <summary>
+        /// Get list of all folders
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Folder> Get()
         {
-            MailClient client = new MailClient(_accountInfo);
-            var folders = client.GetFolders();
-            return folders;
+            return _mailClient.GetFolders();
         }
+
     }
 }

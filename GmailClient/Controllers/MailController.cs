@@ -9,6 +9,19 @@ namespace GmailClient.Controllers
     [Authorize]
     public class MailController : Controller
     {
+        private readonly IMailSender _sender;
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="sender">Mail sender implementation</param>
+        public MailController(IMailSender sender)
+        {
+            if (sender == null)
+                throw new ArgumentNullException("sender");
+            _sender = sender;
+        }
+
         // GET: Mail
         public ActionResult Index(string folder = "INBOX")
         {
@@ -27,8 +40,7 @@ namespace GmailClient.Controllers
             {
                 try
                 {
-                    Sender sender = new Sender();
-                    sender.SendMail(model.To, model.Subject, model.Message);
+                    _sender.SendMail(model.To, model.Subject, model.Message);
                     return Content("Your mail was submitted successfully.");
                 }
                 catch (Exception ex)
@@ -39,7 +51,7 @@ namespace GmailClient.Controllers
             }
             else
             {
-                Response.StatusCode = (int) HttpStatusCode.BadRequest;
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Content("Not valid data.");
             }
         }

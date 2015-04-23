@@ -10,12 +10,17 @@ using Message = GmailClient.Model.Message;
 namespace GmailClient.Transport
 {
     /// <summary>
-    /// My custom IMAP client implementation
+    /// My custom IMAP client implementation for Gmail
     /// </summary>
-    public class MailClient
+    public class MailClient : IMailClient
     {
+        private const string Host = "imap.gmail.com";
+
         private readonly IAccountInfo _accountInfo;
 
+        /// <summary>
+        /// Static constructor
+        /// </summary>
         static MailClient()
         {
             // Set mappings
@@ -27,7 +32,7 @@ namespace GmailClient.Transport
         }
 
         /// <summary>
-        /// Constructor
+        /// Default constructor
         /// </summary>
         /// <param name="accountInfo">Mail account info (email, password)</param>
         public MailClient(IAccountInfo accountInfo)
@@ -37,6 +42,10 @@ namespace GmailClient.Transport
             _accountInfo = accountInfo;
         }
 
+        /// <summary>
+        /// Get folders
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Folder> GetFolders()
         {
             using (ImapClient client = new ImapClient())
@@ -44,7 +53,7 @@ namespace GmailClient.Transport
                 //client.Behavior.FolderTreeBrowseMode = FolderTreeBrowseMode.Full;
                 client.Behavior.ExamineFolders = false;
 
-                if (client.Connect("imap.gmail.com", true))
+                if (client.Connect(Host, true))
                 {
                     if (client.Login(_accountInfo.Email, _accountInfo.Password))
                     {
@@ -57,6 +66,11 @@ namespace GmailClient.Transport
             return null;
         }
 
+        /// <summary>
+        /// Get messages from folder
+        /// </summary>
+        /// <param name="folderName">Folder name</param>
+        /// <returns></returns>
         public IEnumerable<Message> GetMessages(string folderName)
         {
             using (ImapClient client = new ImapClient())

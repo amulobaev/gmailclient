@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
-using GmailClient.Data;
 using GmailClient.Model;
 using GmailClient.Transport;
 
@@ -10,23 +8,23 @@ namespace GmailClient.Controllers
 {
     public class MessagesController : ApiController
     {
-        private readonly IAccountInfo _accountInfo;
+        private readonly IMailClient _mailClient;
 
-        public MessagesController(IAccountInfo accountInfo)
+        /// <summary>
+        /// Default constructor for API controller
+        /// </summary>
+        /// <param name="mailClient">Mail client implementation</param>
+        public MessagesController(IMailClient mailClient)
         {
-            if (accountInfo == null)
-                throw new ArgumentNullException("accountInfo");
-            _accountInfo = accountInfo;
+            if (mailClient == null)
+                throw new ArgumentNullException("mailClient");
+            _mailClient = mailClient;
         }
 
         [HttpGet]
         public IEnumerable<Message> Get([FromUri]string folder)
         {
-            AccountRepository repository = new AccountRepository();
-            Account account = repository.GetAll().FirstOrDefault();
-            MailClient client = new MailClient(_accountInfo);
-            var messages = client.GetMessages(folder);
-            return messages;
+            return _mailClient.GetMessages(folder);
         }
     }
 }

@@ -8,6 +8,9 @@ using GmailClient.Model;
 
 namespace GmailClient.Data
 {
+    /// <summary>
+    /// IRepository implementation for ApplicationUser model
+    /// </summary>
     public class UserRepository : IRepository<ApplicationUser>
     {
         /// <summary>
@@ -23,6 +26,10 @@ namespace GmailClient.Data
                 .ConstructUsing(x => new ApplicationUser(x.Id.ToString(), x.User, x.Password));
         }
 
+        /// <summary>
+        /// Get all users
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<ApplicationUser> GetAll()
         {
             using (MailContext context = new MailContext())
@@ -32,6 +39,11 @@ namespace GmailClient.Data
             }
         }
 
+        /// <summary>
+        /// Get user by id
+        /// </summary>
+        /// <param name="id">Identifier</param>
+        /// <returns></returns>
         public ApplicationUser GetById(Guid id)
         {
             using (MailContext context = new MailContext())
@@ -41,6 +53,10 @@ namespace GmailClient.Data
             }
         }
 
+        /// <summary>
+        /// Create user in repo
+        /// </summary>
+        /// <param name="user"></param>
         public void Create(ApplicationUser user)
         {
             using (MailContext context = new MailContext())

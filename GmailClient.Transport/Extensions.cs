@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ImapX;
 using ImapX.Collections;
 
 namespace GmailClient.Transport
 {
+    /// <summary>
+    /// Some usefull extensions
+    /// </summary>
     public static class Extensions
     {
-        public static List<ImapX.Folder> AllFolders(this ImapClient client)
+        public static List<Folder> AllFolders(this ImapClient client)
         {
             if (client == null)
                 throw new ArgumentNullException("client");
@@ -39,12 +40,12 @@ namespace GmailClient.Transport
             }
         }
 
-        public static ImapX.Folder FindFolder(this ImapClient client, string name)
+        public static Folder FindFolder(this ImapClient client, string name)
         {
             return FindFolder(client.Folders, name);
         }
 
-        private static ImapX.Folder FindFolder(FolderCollection folderCollection, string name)
+        private static Folder FindFolder(FolderCollection folderCollection, string name)
         {
             Folder folder = folderCollection.FirstOrDefault(x => x.Name == name);
             if (folder != null)

@@ -1,5 +1,6 @@
 ﻿using GmailClient.Data;
 using GmailClient.Model;
+using GmailClient.Transport;
 using Ninject.Modules;
 
 namespace GmailClient
@@ -17,6 +18,8 @@ namespace GmailClient
             Bind<IRepository<Account>>().To<AccountRepository>();
             Bind<IRepository<ApplicationUser>>().To<UserRepository>();
             Bind<IAccountInfo>().To<AccountInfo>();
+            Bind<IMailClient>().To<MailClient>();
+            Bind<IMailSender>().To<GmailSender>();
         }
     }
 }
