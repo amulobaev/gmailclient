@@ -10,17 +10,24 @@ using FluentMigrator.Runner.Processors.SqlServer;
 namespace GmailClient.Data
 {
     /// <summary>
-    /// Версионная миграция структуры базы данных
+    /// Database migration
     /// </summary>
     public class Migrator
     {
         readonly string _connectionString;
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="connectionString">Connection string</param>
         public Migrator(string connectionString)
         {
             _connectionString = connectionString;
         }
 
+        /// <summary>
+        /// Migration options
+        /// </summary>
         private class MigrationOptions : IMigrationProcessorOptions
         {
             public bool PreviewOnly { get; set; }
@@ -29,9 +36,9 @@ namespace GmailClient.Data
         }
 
         /// <summary>
-        /// Получаем сборку с миграционным файлами, создаем контекст и запускаем сам процесс миграции
+        /// Load migrations, run migrations
         /// </summary>
-        /// <param name="runnerAction">Действие запускающее миграцию (Up/Down)</param>
+        /// <param name="runnerAction">Action (Up/Down)</param>
         public void Migrate(Action<IMigrationRunner> runnerAction)
         {
             var options = new MigrationOptions { PreviewOnly = false, Timeout = 0 };

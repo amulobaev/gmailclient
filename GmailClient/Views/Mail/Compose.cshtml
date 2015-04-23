@@ -1,54 +1,68 @@
 ﻿@model GmailClient.Models.ComposeMailModel
-@{
-    ViewBag.Title = "Compose";
-}
 
-<div id="target">
-    <div id="status"></div>
-    @{
-        var options = new AjaxOptions
-        {
-            HttpMethod = "POST",
-            InsertionMode = InsertionMode.Replace,
-            UpdateTargetId = "target",
-            OnFailure = "ShowError()",
-            OnSuccess = "ShowSuccess()"
-        };
-    }
-    @using (Ajax.BeginForm("Send", "Mail", options))
-    {
-        @Html.ValidationSummary(true)
-        <div class="form-group">
-            @Html.LabelFor(model => model.To, new { @class = "control-label" })
-            @Html.TextBoxFor(model => model.To, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.To)
-        </div><!--//form-group-->
-        <div class="form-group email">
-            @Html.LabelFor(model => model.Subject, new { @class = "control-label" })
-            @Html.TextBoxFor(model => model.Subject, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Subject)
-        </div><!--//form-group-->
-        <div class="form-group message">
-            @Html.LabelFor(model => model.Message, new { @class = "control-label" })
-            @Html.TextAreaFor(model => model.Message, new { @class = "form-control", rows = 5 })
-            @Html.ValidationMessageFor(model => model.Message)
-        </div><!--//form-group-->
-        <button type="submit" class="btn btn-primary">Send</button>
-    }
-    <script>
-        function ShowError() {
-            $("#status").removeClass();
-            $("#status").addClass("alert alert-warning");
-            $("#status").html("Error");
-        }
 
-        function ShowSuccess() {
-            $("#target").removeClass();
-            $("#target").addClass("alert alert-success");
-        }
-    </script>
-</div><!--//target-->
-@section scripts
-{
-    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
-}
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Compose mail</h4>
+            </div>
+            <div class="modal-body">
+
+                <div id="target">
+                    @{
+                        var options = new AjaxOptions
+                        {
+                            HttpMethod = "POST",
+                            InsertionMode = InsertionMode.Replace,
+                            UpdateTargetId = "status",
+                            OnFailure = "ShowError()",
+                            OnSuccess = "ShowSuccess()"
+                        };
+                    }
+                    @using (Ajax.BeginForm("Send", "Mail", options, new { id = "sendForm"}))
+                    {
+                        @Html.ValidationSummary(true)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.To, new { @class = "control-label" })
+                            @Html.TextBoxFor(model => model.To, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.To)
+                        </div><!--//form-group-->
+                        <div class="form-group email">
+                            @Html.LabelFor(model => model.Subject, new { @class = "control-label" })
+                            @Html.TextBoxFor(model => model.Subject, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Subject)
+                        </div><!--//form-group-->
+                        <div class="form-group message">
+                            @Html.LabelFor(model => model.Message, new { @class = "control-label" })
+                            @Html.TextAreaFor(model => model.Message, new { @class = "form-control", rows = 5 })
+                            @Html.ValidationMessageFor(model => model.Message)
+                        </div><!--//form-group-->
+                    }
+                    <div id="status"></div>
+                    <script>
+                        function ShowSuccess() {
+                            $("#status").removeClass();
+                            $("#status").addClass("alert alert-success");
+                            $("#To").val('');
+                            $("#Subject").val('');
+                            $("#Message").val('');
+                        }
+                        function ShowError() {
+                            $("#status").removeClass();
+                            $("#status").addClass("alert alert-warning");
+                            $("#status").html("There was an error submitting the mail, please try again later.");
+                        }
+                    </script>
+                </div><!--//target-->
+
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" href="#" onclick="$('#sendForm').submit();">Send</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

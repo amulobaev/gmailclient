@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GmailClient.Model
 {
@@ -12,6 +8,9 @@ namespace GmailClient.Model
     /// </summary>
     public class Account
     {
+        /// <summary>
+        /// Unique identifier
+        /// </summary>
         public Guid Id { get; set; }
         
         /// <summary>

@@ -4,15 +4,23 @@
     ViewBag.Title = "Mail";
 }
 
-<div class="row">
-    <p>
-        @Html.ActionLink("Compose mail", "Compose", "Mail", new { @class = "btn btn-primary", role = "button" })
-    </p>
-</div>
+@section head
+{
+    <style type="text/css">
+        .hiddenRow {
+            padding: 0 !important;
+        }
+    </style>
+}
 
 <div class="row">
-    <div class="col-md-3" role="complementary">
+    <div class="col-md-2" role="complementary">
         @*Folders*@
+        <div class="row">
+            <p>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Compose mail</button>
+            </p>
+        </div>
         <div id="scanfolders">Scanning folders...</div>
         <nav>
             <ul class="nav" id="folders">
@@ -27,14 +35,20 @@
             <thead>
             <th>Sender</th>
             <th>Subject</th>
+            <th>Date</th>
+            <th>&nbsp;</th>
             </thead>
             <tbody></tbody>
         </table>
     </div>
 </div>
 
+@Html.Action("Compose", "Mail")
+
 @section scripts
 {
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
+
     <script type="text/javascript">
         //Fetch folders
         $(document).ready(function () {
@@ -56,12 +70,22 @@
         function LoadMessages(data) {
             $("#messages").find("tr:gt(0)").remove();
             $.each(data, function (key, val) {
-                var tableRow = '<tr>' +
+                var tableRow = '<tr id="rowheader' + val.UId + '" data-toggle="collapse" data-target="#divbody' + val.UId + '" class="accordion-toggle">' +
                                 '<td>' + val.FromDisplayName + '</td>' +
                                 '<td>' + val.Subject + '</td>' +
+                                '<td>' + val.Date + '</td>' +
+                                '<td><a href="#" onclick="deleteMail(' + val.UId +')"><i class="fa fa-times"></i></a></td>' +
                                 '</tr>';
                 $('#messages').append(tableRow);
+                var bodyRow = '<tr id="rowbody' + val.UId + '">' +
+                    '<td colspan="3" class="hiddenRow"><div id="divbody' + val.UId + '" class="accordian-body collapse">' + val.Body + '</div></td>' +
+                    '</tr>';
+                $('#messages').append(bodyRow);
             });
+        }
+
+        function deleteMail(id) {
+            $("tr[id*=" + id + "]").remove();
         }
     </script>
 }

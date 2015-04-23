@@ -32,6 +32,7 @@ namespace GmailClient.Transport
                 mail.IsBodyHtml = false;
                 client.Send(mail);
             }
+            
         }
     }
 }

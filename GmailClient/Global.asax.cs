@@ -1,20 +1,26 @@
-﻿using System;
-using System.Web;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Ninject;
+using Ninject.Web.Common;
 
 namespace GmailClient
 {
-    public class Global : HttpApplication
+    public class Global : NinjectHttpApplication
     {
-        void Application_Start(object sender, EventArgs e)
+        protected override IKernel CreateKernel()
         {
-            // Код, выполняемый при запуске приложения
+            return new StandardKernel(new MyModule());
+        }
+
+        protected override void OnApplicationStarted()
+        {
+            base.OnApplicationStarted();
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);            
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }

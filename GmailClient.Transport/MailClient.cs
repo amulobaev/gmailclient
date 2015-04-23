@@ -1,32 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
+using GmailClient.Model;
 using ImapX;
-using ImapX.Collections;
 using ImapX.Enums;
 using Folder = GmailClient.Model.Folder;
 using Message = GmailClient.Model.Message;
 
 namespace GmailClient.Transport
 {
+    /// <summary>
+    /// My custom IMAP client implementation
+    /// </summary>
     public class MailClient
     {
-        private readonly string _login;
-        private readonly string _password;
+        private readonly IAccountInfo _accountInfo;
 
         static MailClient()
         {
+            // Set mappings
             Mapper.CreateMap<ImapX.Folder, Folder>();
-            Mapper.CreateMap<ImapX.Message, Message>();
+            Mapper.CreateMap<ImapX.Message, Message>()
+                .ForMember(dest => dest.Date,
+                    opt => opt.MapFrom(src => src.Date.HasValue ? src.Date.Value.ToShortDateString() : String.Empty))
+                .ForMember(dest => dest.Body, opt => opt.MapFrom(src => src.Body.Text));
         }
 
-        public MailClient(string login, string password)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="accountInfo">Mail account info (email, password)</param>
+        public MailClient(IAccountInfo accountInfo)
         {
-            _login = login;
-            _password = password;
+            if (accountInfo == null)
+                throw new ArgumentNullException("accountInfo");
+            _accountInfo = accountInfo;
         }
 
         public IEnumerable<Folder> GetFolders()
@@ -38,7 +46,7 @@ namespace GmailClient.Transport
 
                 if (client.Connect("imap.gmail.com", true))
                 {
-                    if (client.Login(_login, _password))
+                    if (client.Login(_accountInfo.Email, _accountInfo.Password))
                     {
                         List<ImapX.Folder> folders = client.AllFolders();
                         return Mapper.Map<List<ImapX.Folder>, List<Folder>>(folders);
@@ -54,11 +62,11 @@ namespace GmailClient.Transport
             using (ImapClient client = new ImapClient())
             {
                 client.Behavior.ExamineFolders = false;
-                client.Behavior.MessageFetchMode = MessageFetchMode.Tiny;
+                client.Behavior.MessageFetchMode = MessageFetchMode.Minimal;
 
                 if (client.Connect("imap.gmail.com", true))
                 {
-                    if (client.Login(_login, _password))
+                    if (client.Login(_accountInfo.Email, _accountInfo.Password))
                     {
                         ImapX.Folder folder = client.FindFolder(folderName);
                         if (folder != null)

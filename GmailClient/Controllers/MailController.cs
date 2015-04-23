@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Net;
+using System.Web.Mvc;
 using GmailClient.Models;
 using GmailClient.Transport;
 
@@ -13,22 +15,32 @@ namespace GmailClient.Controllers
             return View(new MailModel() { Folder = folder });
         }
 
+        [ChildActionOnly]
         public ActionResult Compose()
         {
-            return View();
+            return PartialView(new ComposeMailModel());
         }
 
         public ActionResult Send(ComposeMailModel model)
         {
             if (ModelState.IsValid)
             {
-                Sender sender = new Sender();
-                sender.SendMail(model.To, model.Subject, model.Message);
-                return Content("Success");
+                try
+                {
+                    Sender sender = new Sender();
+                    sender.SendMail(model.To, model.Subject, model.Message);
+                    return Content("Your mail was submitted successfully.");
+                }
+                catch (Exception ex)
+                {
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Content("There was an error submitting the mail, please try again later.");
+                }
             }
             else
             {
-                return Content("Error");
+                Response.StatusCode = (int) HttpStatusCode.BadRequest;
+                return Content("Not valid data.");
             }
         }
     }

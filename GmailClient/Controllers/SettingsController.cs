@@ -12,9 +12,9 @@ namespace GmailClient.Controllers
     {
         private readonly IRepository<Account> _accountRepository;
 
-        public SettingsController()
+        public SettingsController(IRepository<Account> accountRepository)
         {
-            _accountRepository = new AccountRepository();
+            _accountRepository = accountRepository;
         }
 
         [HttpGet]

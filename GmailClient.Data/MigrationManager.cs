@@ -1,24 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GmailClient.Data
 {
     /// <summary>
-    /// Класс управляет процессом миграции
+    /// Migration manager
     /// </summary>
     public static class MigrationManager
     {
         /// <summary>
-        /// Запуск миграции
+        /// Start migrations
         /// </summary>
-        /// <param name="connectionString">Строка соединения с базой</param>
+        /// <param name="connectionString">Connection string</param>
         public static void Start(string connectionString)
         {
-            var migrator = new Migrator(connectionString);
-
+            Migrator migrator = new Migrator(connectionString);
             migrator.Migrate(runner => runner.MigrateUp());
         }
     }
