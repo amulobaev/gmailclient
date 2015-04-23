@@ -25,7 +25,10 @@ namespace GmailClient
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            MigrationManager.Start(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+            // Create and start migration manager
+            IMigrationManager migrationManager =
+                new MigrationManager(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+            migrationManager.Start();
         }
     }
 }

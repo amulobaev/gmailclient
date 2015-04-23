@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="AccountInfo.cs" />
     <Compile Include="Entities\AccountEntity.cs" />
+    <Compile Include="IMigrationManager.cs" />
     <Compile Include="Repositories\AccountRepository.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="IRepository.cs" />
